@@ -104,7 +104,11 @@
     const comment = form.querySelector("#message");
     const commentContainer = document.getElementById("comment-list");
 
-    [firstName, lastName, comment].forEach(node => node.addEventListener("change", hideError));
+    [
+      firstName, 
+      lastName, 
+      comment
+    ].forEach(element => element.addEventListener("input", hideError));
 
     function showError() {
       errorMessage.setAttribute("style", "");
@@ -116,7 +120,7 @@
 
     function formIsValid() {
       return ![firstName, lastName, comment]
-        .map(node => node.value.trim() !== "")
+        .map(element => element.value.trim() !== "")
         .includes(false);
     }
 
@@ -135,8 +139,8 @@
     }
 
     function clearForm() {
-      [firstName, lastName, comment].forEach(node => {
-        node.value = "";
+      [firstName, lastName, comment].forEach(element => {
+        element.value = "";
       });
     }
 
@@ -144,13 +148,13 @@
       event.preventDefault();
       if (!formIsValid()) {
         showError();
-        return
+        return;
       }
 
       commentContainer.appendChild(
         createCommentComponent({
           fullName: `${firstName.value.trim()} ${lastName.value.trim()}`,
-          message: comment.value,
+          message: comment.value.trim(),
         })
       )
 
